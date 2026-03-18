@@ -1,6 +1,6 @@
-display.className = "display reading";
-
-let lastTouchEnd = 0;
+let mode = "kanji";     // 기본 모드 (kanji / reading)
+let tempView = false;   // 임시 뜻/한자 보기
+let index = 0;
 
 const kanjiData = {
     1: [
