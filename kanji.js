@@ -1,5 +1,5 @@
-let mode = "kanji";
-let tempMode = null;
+let mode = "kanji";      // 기본 모드 (kanji / reading)
+let tempMode = null;     // meaning / reading / words / kanji
 let index = 0;
 
 function toggleMode(){
@@ -8,8 +8,14 @@ function toggleMode(){
     update();
 }
 
+// ✔ 핵심: 완전 정상 토글 구조
 function showMeaning(){
-    tempMode = (tempMode === "meaning") ? null : "meaning";
+    if(tempMode === "meaning" || tempMode === "kanji"){
+        tempMode = null; // 해제
+    }
+    else{
+        tempMode = (mode === "kanji") ? "meaning" : "kanji";
+    }
     update();
 }
 
@@ -46,20 +52,39 @@ function update(){
     let btnReading = document.getElementById("btnReading");
     let btnWords = document.getElementById("btnWords");
 
+    // ✔ 버튼 텍스트 동적 변경
+    if(mode === "kanji"){
+        btnMeaning.innerText = "뜻";
+    } else {
+        btnMeaning.innerText = "한자";
+    }
+
     btnMeaning.classList.remove("active");
     btnReading.classList.remove("active");
     btnWords.classList.remove("active");
 
+    // ✔ 뜻
     if(tempMode === "meaning"){
         display.innerText = item.r;
         display.className = "display reading";
         btnMeaning.classList.add("active");
     }
+
+    // ✔ 한자 강제 보기
+    else if(tempMode === "kanji"){
+        display.innerText = item.k;
+        display.className = "display kanji";
+        btnMeaning.classList.add("active");
+    }
+
+    // ✔ 음훈
     else if(tempMode === "reading"){
         display.innerText = item.on + "\n" + item.kun;
         display.className = "display reading";
         btnReading.classList.add("active");
     }
+
+    // ✔ 단어 (2열 grid)
     else if(tempMode === "words"){
         display.innerHTML = `
             <div style="
@@ -68,15 +93,12 @@ function update(){
                 text-align:center;
                 row-gap:10px;
             ">
-                <!-- 1행: 한자 -->
                 <div style="font-weight:bold;">${item.words[0].w}</div>
                 <div style="font-weight:bold;">${item.words[1].w}</div>
 
-                <!-- 2행: 발음 -->
                 <div style="font-size:4vw; color:#aaa;">(${item.words[0].y})</div>
                 <div style="font-size:4vw; color:#aaa;">(${item.words[1].y})</div>
 
-                <!-- 3행: 뜻 -->
                 <div style="color:#ddd;">${item.words[0].m}</div>
                 <div style="color:#ddd;">${item.words[1].m}</div>
             </div>
@@ -84,6 +106,8 @@ function update(){
         display.className = "display reading";
         btnWords.classList.add("active");
     }
+
+    // ✔ 기본 모드
     else {
         if(mode === "kanji"){
             display.innerText = item.k;
@@ -94,9 +118,11 @@ function update(){
         }
     }
 
+    // ✔ 카운터
     document.getElementById("counter").innerText =
         (index + 1) + " / " + list.length;
 
+    // ✔ 진행률
     let percent = ((index + 1) / list.length) * 100;
     document.getElementById("progress").style.width = percent + "%";
 }
