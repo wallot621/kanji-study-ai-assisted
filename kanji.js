@@ -1084,3 +1084,5 @@ const kanjiData = {
 {k:"論", r:"논할 론"}
     ]
 };
+
+update();
