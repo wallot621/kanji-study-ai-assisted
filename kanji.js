@@ -1,12 +1,42 @@
+// 상태 변수
 let mode = "kanji";     // 기본 모드 (kanji / reading)
-let tempView = false;   // 임시 뜻/한자 보기
+let tempView = false;   // 임시 뒤집기
 let index = 0;
 
+// 모드 전환
+function toggleMode(){
+    mode = (mode === "kanji") ? "reading" : "kanji";
+    tempView = false;
+    update();
+}
+
+// 임시 뜻/한자 보기
 function showTemp(){
     tempView = !tempView;
     update();
 }
 
+// 다음
+function nextKanji(){
+    let grade = document.getElementById("grade").value;
+    let list = kanjiData[grade];
+
+    index = (index + 1) % list.length;
+    tempView = false;
+    update();
+}
+
+// 이전
+function prevKanji(){
+    let grade = document.getElementById("grade").value;
+    let list = kanjiData[grade];
+
+    index = (index - 1 + list.length) % list.length;
+    tempView = false;
+    update();
+}
+
+// 화면 업데이트 (핵심)
 function update(){
     let grade = document.getElementById("grade").value;
     let list = kanjiData[grade];
@@ -18,8 +48,10 @@ function update(){
     let showKanji;
 
     if(tempView){
+        // 임시 뒤집기
         showKanji = (mode !== "kanji");
     } else {
+        // 기본 모드
         showKanji = (mode === "kanji");
     }
 
@@ -30,25 +62,22 @@ function update(){
         display.innerText = item.r;
         display.className = "display reading";
     }
+
+    // 카운터
+    document.getElementById("counter").innerText =
+        (index + 1) + " / " + list.length + " ( " + grade + "학년 )";
+
+    // 진행률
+    let percent = ((index + 1) / list.length) * 100;
+    document.getElementById("progress").style.width = percent + "%";
 }
 
-function nextKanji(){
-    let grade = document.getElementById("grade").value;
-    let list = kanjiData[grade];
-
-    index = (index + 1) % list.length;
-    tempView = false; // 핵심
+// 학년 변경 시 초기화
+document.getElementById("grade").addEventListener("change", () => {
+    index = 0;
+    tempView = false;
     update();
-}
-
-function prevKanji(){
-    let grade = document.getElementById("grade").value;
-    let list = kanjiData[grade];
-
-    index = (index - 1 + list.length) % list.length;
-    tempView = false; // 핵심
-    update();
-}
+});
 
 const kanjiData = {
     1: [
