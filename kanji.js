@@ -2,6 +2,54 @@ let mode = "kanji";     // 기본 모드 (kanji / reading)
 let tempView = false;   // 임시 뜻/한자 보기
 let index = 0;
 
+function showTemp(){
+    tempView = !tempView;
+    update();
+}
+
+function update(){
+    let grade = document.getElementById("grade").value;
+    let list = kanjiData[grade];
+    let item = list[index];
+    let display = document.getElementById("display");
+
+    if(!item) return;
+
+    let showKanji;
+
+    if(tempView){
+        showKanji = (mode !== "kanji");
+    } else {
+        showKanji = (mode === "kanji");
+    }
+
+    if(showKanji){
+        display.innerText = item.k;
+        display.className = "display kanji";
+    } else {
+        display.innerText = item.r;
+        display.className = "display reading";
+    }
+}
+
+function nextKanji(){
+    let grade = document.getElementById("grade").value;
+    let list = kanjiData[grade];
+
+    index = (index + 1) % list.length;
+    tempView = false; // 핵심
+    update();
+}
+
+function prevKanji(){
+    let grade = document.getElementById("grade").value;
+    let list = kanjiData[grade];
+
+    index = (index - 1 + list.length) % list.length;
+    tempView = false; // 핵심
+    update();
+}
+
 const kanjiData = {
     1: [
         {k:"一", r:"한 일"},
