@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한자 학습</title>
+
+<style>
+body {
+    background: #0f0f13;
+    color: white;
+    font-family: Arial;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 420px;
+    background: #1c1f26;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 15px;
+}
+
+select, button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    background: #2a2e38;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:active {
+    background: #3a3f4d;
+}
+
+.display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 25vw;
+}
+
+.display.kanji {
+    font-size: 18vw;
+}
+
+.display.reading {
+    font-size: 9vw !important;
+    line-height: 1.3;
+}
+
+#counter {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #333;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background: #4caf50;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+.button-group button {
+    flex: 1;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>한자 학습</h2>
+
+    <select id="grade">
+        <option value="1">1학년</option>
+        <option value="2">2학년</option>
+        <option value="3">3학년</option>
+        <option value="4">4학년</option>
+        <option value="5">5학년</option>
+        <option value="6">6학년</option>
+    </select>
+
+    <button onclick="toggleMode()">모드 전환</button>
+
+    <div class="display" id="display">一</div>
+
+    <div id="counter">1 / 80</div>
+
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <div class="button-group">
+        <button onclick="prevKanji()">이전</button>
+        <button onclick="nextKanji()">다음</button>
+    </div>
+</div>
+
+<script src="kanji.js"></script>
+
+<script>
+let mode = "kanji";
+let index = 0;
+
+function toggleMode(){
+    mode = (mode === "kanji") ? "reading" : "kanji";
+    update();
+}
+
+function nextKanji(){
+    let grade = document.getElementById("grade").value;
+    let list = kanjiData[grade];
+
+    index = (index + 1) % list.length;
+    update();
+}
+
+function prevKanji(){
+    let grade = document.getElementById("grade").value;
+    let list = kanjiData[grade];
+
+    index = (index - 1 + list.length) % list.length;
+    update();
+}
+
+function update(){
+    let grade = document.getElementById("grade").value;
+    let list = kanjiData[grade];
+    let item = list[index];
+
+    if(!item) return;
+
+    document.getElementById("display").innerText =
+        (mode === "kanji") ? item.k : item.r;
+
+    document.getElementById("counter").innerText =
+        (index + 1) + " / " + list.length + " ( " + grade + "학년 )";
+
+    // 진행률 바
+    let percent = ((index + 1) / list.length) * 100;
+    document.getElementById("progress").style.width = percent + "%";
+}
+
+// 학년 변경 시 초기화
+document.getElementById("grade").addEventListener("change", () => {
+    index = 0;
+    update();
+});
+
+update();
+</script>
+
+</body>
+</html>
