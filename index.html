@@ -15,8 +15,6 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-}
-body {
     touch-action: manipulation;
 }
 
@@ -39,7 +37,6 @@ select, button {
     border-radius: 8px;
 }
 
-/* ⭐ 핵심: 높이 통일 */
 .display {
     min-height: 260px;
     display: flex;
@@ -57,21 +54,6 @@ select, button {
     font-size: 9vw;
 }
 
-.progress-bar {
-    width: 100%;
-    height: 6px;
-    background: #333;
-    border-radius: 3px;
-    overflow: hidden;
-    margin: 10px 0;
-}
-
-.progress {
-    height: 100%;
-    width: 0%;
-    background: #4caf50;
-}
-
 .button-group {
     display: flex;
     gap: 10px;
@@ -80,13 +62,43 @@ select, button {
 .button-group button.active {
     background: #4caf50;
 }
+
+/* ⭐ 커스텀 슬라이더 */
+#sliderWrap {
+    position: relative;
+    width: 100%;
+    height: 30px;
+    margin-top: 10px;
+}
+
+#sliderTrack {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: #444;
+    transform: translateY(-50%);
+    border-radius: 3px;
+}
+
+#sliderThumb {
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    background: #4caf50;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    touch-action: none;
+}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-    <h2>초등 상용한자V0.2</h2>
+    <h2>초등 상용한자 V0.4</h2>
 
     <select id="grade">
         <option value="1">1학년</option>
@@ -100,12 +112,10 @@ select, button {
     <button onclick="toggleMode()">모드 전환</button>
 
     <div class="button-group">
-        <button id="btnMeaning" onclick="showMeaning()">뜻</button>
         <button id="btnReading" onclick="showReading()">음훈</button>
         <button id="btnWords" onclick="showWords()">단어</button>
     </div>
 
-    <!-- ⭐ 체크박스 추가 -->
     <div style="text-align:right; margin-top:10px;">
         <label>
             <input type="checkbox" id="showMeaningChk"> 한자/뜻 같이보기
@@ -114,10 +124,28 @@ select, button {
 
     <div class="display kanji" id="display"></div>
 
-    <div id="counter"></div>
+    <div style="position:relative; margin-top:10px; height:50px; display:flex; align-items:center;">
+        <div id="counter" style="
+            position:absolute;
+            left:50%;
+            transform:translateX(-50%);
+            font-size:14px;
+            color:#aaa;
+        "></div>
 
-    <div class="progress-bar">
-        <div class="progress" id="progress"></div>
+        <button id="btnMeaning" onclick="showMeaning()" style="
+            margin-left:auto;
+            width:50px;
+            height:50px;
+            padding:0;
+            font-size:14px;
+        ">뜻</button>
+    </div>
+
+    <!-- ⭐ 커스텀 슬라이더 -->
+    <div id="sliderWrap">
+        <div id="sliderTrack"></div>
+        <div id="sliderThumb"></div>
     </div>
 
     <div class="button-group">
@@ -126,15 +154,15 @@ select, button {
     </div>
 </div>
 
-<script src="grade1.js"></script>
-<script src="grade2.js"></script>
-<script src="grade3.js"></script>
-<script src="grade4.js"></script>
-<script src="grade5.js"></script>
-<script src="grade6.js"></script>
+<script src="./grade1.js"></script>
+<script src="./grade2.js"></script>
+<script src="./grade3.js"></script>
+<script src="./grade4.js"></script>
+<script src="./grade5.js"></script>
+<script src="./grade6.js"></script>
 
-<script src="kanjiData.js"></script>
-<script src="main.js"></script>
+<script src="./kanjiData.js"></script>
+<script src="./main.js"></script>
 
 </body>
 </html>
