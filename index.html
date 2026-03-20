@@ -15,7 +15,9 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    touch-action: manipulation;
+
+    /* ⭐ 모바일 뒤로가기 방지 */
+    overscroll-behavior-x: none;
 }
 
 .container {
@@ -35,6 +37,7 @@ select, button {
     color: white;
     border: none;
     border-radius: 8px;
+    font-size: 0.7em;
 }
 
 .display {
@@ -66,9 +69,11 @@ select, button {
 /* ⭐ 커스텀 슬라이더 */
 #sliderWrap {
     position: relative;
-    width: 100%;
+    width: 85%;          /* ⭐ 길이 줄임 */
+    margin: 10px auto 0;
     height: 30px;
-    margin-top: 10px;
+
+    touch-action: pan-y; /* ⭐ 좌우 스와이프 방지 */
 }
 
 #sliderTrack {
@@ -90,7 +95,6 @@ select, button {
     background: #4caf50;
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    touch-action: none;
 }
 </style>
 </head>
@@ -98,7 +102,7 @@ select, button {
 <body>
 
 <div class="container">
-    <h2>초등 상용한자 V0.4</h2>
+    <h2>초등 상용한자 V0.3</h2>
 
     <select id="grade">
         <option value="1">1학년</option>
@@ -137,8 +141,6 @@ select, button {
             margin-left:auto;
             width:50px;
             height:50px;
-            padding:0;
-            font-size:14px;
         ">뜻</button>
     </div>
 
