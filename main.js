@@ -1,3 +1,11 @@
+function setAppHeight() {
+    const vh = window.innerHeight;
+    document.documentElement.style.setProperty('--app-height', `${vh}px`);
+}
+
+window.addEventListener('resize', setAppHeight);
+setAppHeight();
+
 let mode = "kanji";
 let tempMode = null;
 let index = 0;
@@ -157,34 +165,15 @@ function update(){
     }
 
     else if(tempMode === "reading"){
-    display.innerHTML = wrap(`
-        <div class="reading-layout">
-
-            <div class="reading-kanji">
-                ${item.k}
+        display.innerHTML = wrap(`
+            <div style="display:flex; flex-direction:column; gap:0.3em; font-size:2em;">
+                <div>${toHiragana(item.on)}</div>
+                <div>${toHiragana(item.kun)}</div>
             </div>
-
-            <div class="reading-grid">
-
-                <div class="label">음</div>
-                <div class="label">훈</div>
-
-                <div class="reading-on">
-                    ${toHiragana(item.on)}
-                </div>
-
-                <div class="reading-kun">
-                    ${toHiragana(item.kun)}
-                </div>
-
-            </div>
-
-        </div>
-    `);
-
-    display.className = "display reading";
-    btnReading.classList.add("active");
-}
+        `);
+        display.className = "display reading";
+        btnReading.classList.add("active");
+    }
 
     else if(tempMode === "words"){
         const m1Size = getMeaningFontSize(item.words[0].m);
