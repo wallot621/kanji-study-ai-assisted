@@ -1,11 +1,11 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>한자 학습</title>
-<!-- 1133 -->
+
 <style>
 body {
     background: #0f0f13;
@@ -14,12 +14,13 @@ body {
 
     display: flex;
     justify-content: center;
-    align-items: flex-start;   /* ⭐ 수정 (잘림 해결) */
+    align-items: flex-start;
 
-    height: 100dvh;
+    min-height: 100dvh;     /* ⭐ 수정 */
     margin: 0;
     padding-top: 10px;
 
+    overflow-y: auto;       /* ⭐ 핵심 (잘림 해결) */
     overscroll-behavior-x: none;
 }
 
@@ -28,13 +29,11 @@ body {
 .phone-frame {
     width: 100%;
     max-width: 420px;
-    aspect-ratio: 9 / 19.5;
-    max-height: 100dvh;   /* ⭐ 추가 (넘침 방지) */
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    aspect-ratio: 9 / 19.5;   /* 아이폰 비율 */
 }
+
+/* ========================= */
 
 .container {
     width: 100%;
@@ -60,7 +59,7 @@ select, button {
 }
 
 /* =========================
-   ⭐ display 핵심 구조
+   display 구조
 ========================= */
 
 .display {
@@ -75,7 +74,7 @@ select, button {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;   /* ⭐ 위아래 균형 */
+    justify-content: center;   /* ⭐ 위아래 동일 */
     align-items: center;
 }
 
@@ -101,7 +100,7 @@ select, button {
 }
 
 /* =========================
-   ⭐ 단어 구조
+   단어
 ========================= */
 
 .word-grid {
