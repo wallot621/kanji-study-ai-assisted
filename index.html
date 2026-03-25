@@ -2,7 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>한자 학습</title>
 
 <style>
@@ -21,7 +22,7 @@ body {
 .phone-frame {
     width: 100%;
     max-width: 420px;
-    aspect-ratio: 9 / 19.5;  /* 아이폰 비율 */
+    aspect-ratio: 9 / 19.5;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,22 +49,35 @@ select, button {
     font-size: 0.7em;
 }
 
+/* =========================
+   ⭐ display 수정 핵심
+========================= */
+
 .display {
-    height: 320px;        /* ⭐ 고정 높이 */
+    height: 320px;
+    overflow: hidden;
+
     display: flex;
-    align-items: center;
     justify-content: center;
-    text-align: center;
-    white-space: pre-line;
-    overflow: hidden;     /* ⭐ 넘치는 거 잘라냄 */
 }
 
+/* ⭐ 핵심 */
+.display-inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* 위아래 균형 */
+    align-items: center;
+}
+
+/* ========================= */
+
 .display.kanji {
-    font-size: 1em;
+    font-size: 1.2em;
 }
 
 .display.reading {
-    font-size: 2.5em;
+    font-size: 2em;
 }
 
 .button-group {
@@ -75,14 +89,41 @@ select, button {
     background: #4caf50;
 }
 
-/* ⭐ 커스텀 슬라이더 */
+/* ===== 단어 ===== */
+
+.word-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2em;
+    row-gap: 0.2em;
+    text-align: center;
+    align-content: center;
+    height: 100%;
+}
+
+.word-kanji {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.word-reading {
+    font-size: 0.7em;
+    color: #aaa;
+}
+
+.word-meaning {
+    text-align: center;
+}
+
+/* ========================= */
+
+/* 슬라이더 */
 #sliderWrap {
     position: relative;
-    width: 85%;          /* ⭐ 길이 줄임 */
+    width: 85%;
     margin: 10px auto 0;
     height: 30px;
-
-    touch-action: pan-y; /* ⭐ 좌우 스와이프 방지 */
+    touch-action: pan-y;
 }
 
 #sliderTrack {
@@ -137,8 +178,10 @@ select, button {
             </label>
         </div>
 
+        <!-- ⭐ display -->
         <div class="display kanji" id="display"></div>
 
+        <!-- 카운터 + 버튼 -->
         <div style="position:relative; margin-top:10px; height:50px; display:flex; align-items:center;">
             <div id="counter" style="
                 position:absolute;
@@ -161,6 +204,7 @@ select, button {
             <div id="sliderThumb"></div>
         </div>
 
+        <!-- 이동 -->
         <div class="button-group">
             <button onclick="prevKanji()">이전</button>
             <button onclick="nextKanji()">다음</button>
