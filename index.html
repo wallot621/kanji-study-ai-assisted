@@ -5,27 +5,9 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>한자 학습</title>
-<!-- 1148 -->
+
+
 <style>
-
-/* =========================
-   ⭐ 앱 높이 변수
-========================= */
-
-:root {
-    --app-height: 100dvh;
-}
-
-/* ========================= */
-
-html, body {
-    margin: 0;
-    padding: 0;
-    touch-action: manipulation;
-}
-
-/* ========================= */
-
 body {
     background: #0f0f13;
     color: white;
@@ -33,10 +15,13 @@ body {
 
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;   /* ⭐ 수정 (잘림 해결) */
 
-    height: var(--app-height);   /* ⭐ 핵심 */
-    overflow: hidden;            /* ⭐ 앱처럼 고정 */
+    height: 100dvh;
+    margin: 0;
+    padding-top: 10px;
+
+    overscroll-behavior-x: none;
 }
 
 /* ========================= */
@@ -44,14 +29,13 @@ body {
 .phone-frame {
     width: 100%;
     max-width: 420px;
-    height: 100%;                /* ⭐ 핵심 */
+    aspect-ratio: 9 / 19.5;
+    max-height: 100dvh;   /* ⭐ 추가 (넘침 방지) */
 
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-/* ========================= */
 
 .container {
     width: 100%;
@@ -61,9 +45,6 @@ body {
     border-radius: 12px;
     text-align: center;
     box-sizing: border-box;
-
-    display: flex;
-    flex-direction: column;
 }
 
 /* ========================= */
@@ -80,11 +61,11 @@ select, button {
 }
 
 /* =========================
-   ⭐ display (핵심)
+   ⭐ display 핵심 구조
 ========================= */
 
 .display {
-    flex: 1;                     /* ⭐ 남는 공간 채움 */
+    height: 320px;
     overflow: hidden;
 
     display: flex;
@@ -95,20 +76,52 @@ select, button {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;     /* ⭐ 위아래 동일 */
+    justify-content: center;   /* ⭐ 위아래 균형 */
     align-items: center;
 }
 
 /* ========================= */
 
 .display.kanji {
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
-.display.reading {
-    font-size: 1.8em;
+/* =========================
+   ⭐ 음훈 레이아웃
+========================= */
+
+.reading-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
 }
 
+/* 상단 한자 */
+.reading-kanji {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* 좌우 배치 */
+.reading-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2em;
+    text-align: center;
+}
+
+/* 라벨 (음/훈) */
+.label {
+    font-size: 0.7em;
+    color: #aaa;
+}
+
+/* 실제 발음 */
+.reading-on,
+.reading-kun {
+    font-size: 1.5em;
+}
 /* ========================= */
 
 .button-group {
@@ -121,7 +134,7 @@ select, button {
 }
 
 /* =========================
-   ⭐ 단어
+   ⭐ 단어 구조
 ========================= */
 
 .word-grid {
@@ -149,7 +162,7 @@ select, button {
 }
 
 /* =========================
-   ⭐ 슬라이더
+   슬라이더
 ========================= */
 
 #sliderWrap {
@@ -181,7 +194,6 @@ select, button {
     border-radius: 50%;
     transform: translate(-50%, -50%);
 }
-
 </style>
 </head>
 
