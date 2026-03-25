@@ -165,15 +165,34 @@ function update(){
     }
 
     else if(tempMode === "reading"){
-        display.innerHTML = wrap(`
-            <div style="display:flex; flex-direction:column; gap:0.3em; font-size:2em;">
-                <div>${toHiragana(item.on)}</div>
-                <div>${toHiragana(item.kun)}</div>
+    display.innerHTML = wrap(`
+        <div class="reading-layout">
+
+            <div class="reading-kanji">
+                ${item.k}
             </div>
-        `);
-        display.className = "display reading";
-        btnReading.classList.add("active");
-    }
+
+            <div class="reading-grid">
+
+                <div class="label">음</div>
+                <div class="label">훈</div>
+
+                <div class="reading-on">
+                    ${toHiragana(item.on)}
+                </div>
+
+                <div class="reading-kun">
+                    ${toHiragana(item.kun)}
+                </div>
+
+            </div>
+
+        </div>
+    `);
+
+    display.className = "display reading";
+    btnReading.classList.add("active");
+}
 
     else if(tempMode === "words"){
         const m1Size = getMeaningFontSize(item.words[0].m);
