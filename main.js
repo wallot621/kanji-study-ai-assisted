@@ -1,3 +1,11 @@
+function setAppHeight() {
+    const vh = window.innerHeight;
+    document.documentElement.style.setProperty('--app-height', `${vh}px`);
+}
+
+window.addEventListener('resize', setAppHeight);
+setAppHeight();
+
 let mode = "kanji";
 let tempMode = null;
 let index = 0;
