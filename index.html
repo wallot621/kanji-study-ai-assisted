@@ -5,18 +5,26 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>한자 학습</title>
-
+<!-- 1148 -->
 <style>
 
 /* =========================
-   ⭐ 기본 세팅
+   ⭐ 앱 높이 변수
 ========================= */
+
+:root {
+    --app-height: 100dvh;
+}
+
+/* ========================= */
 
 html, body {
     margin: 0;
     padding: 0;
-    touch-action: manipulation;   /* ⭐ 더블탭 방지 */
+    touch-action: manipulation;
 }
+
+/* ========================= */
 
 body {
     background: #0f0f13;
@@ -25,22 +33,22 @@ body {
 
     display: flex;
     justify-content: center;
-    align-items: center;   /* ⭐ 중앙 정렬 복구 */
+    align-items: center;
 
-    min-height: 100dvh;
-    overflow-y: auto;      /* ⭐ 잘림 방지 */
+    height: var(--app-height);   /* ⭐ 핵심 */
+    overflow: hidden;            /* ⭐ 앱처럼 고정 */
 }
 
-/* =========================
-   ⭐ 폰 프레임
-========================= */
+/* ========================= */
 
 .phone-frame {
     width: 100%;
     max-width: 420px;
-    aspect-ratio: 9 / 19.5;
+    height: 100%;                /* ⭐ 핵심 */
 
-    margin: auto 0;   /* ⭐ 여백 균형 핵심 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* ========================= */
@@ -53,6 +61,9 @@ body {
     border-radius: 12px;
     text-align: center;
     box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
 }
 
 /* ========================= */
@@ -69,11 +80,11 @@ select, button {
 }
 
 /* =========================
-   ⭐ display 핵심
+   ⭐ display (핵심)
 ========================= */
 
 .display {
-    height: 320px;
+    flex: 1;                     /* ⭐ 남는 공간 채움 */
     overflow: hidden;
 
     display: flex;
@@ -84,7 +95,7 @@ select, button {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;   /* ⭐ 위아래 동일 */
+    justify-content: center;     /* ⭐ 위아래 동일 */
     align-items: center;
 }
 
