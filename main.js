@@ -5,7 +5,7 @@ let index = 0;
 let isDragging = false;
 
 /* =========================
-   ⭐ 상태 저장 / 불러오기
+   상태 저장 / 불러오기
 ========================= */
 
 function saveState(){
@@ -83,7 +83,7 @@ function prevKanji(){
 }
 
 /* =========================
-   ⭐ 뜻 길이에 따른 폰트 크기
+   뜻 길이에 따른 폰트 크기
 ========================= */
 
 function getMeaningFontSize(text){
@@ -93,6 +93,12 @@ function getMeaningFontSize(text){
     if(len <= 10) return "0.8em";
     if(len <= 14) return "0.7em";
     return "0.6em";
+}
+
+/* ========================= */
+
+function wrap(content){
+    return `<div class="display-inner">${content}</div>`;
 }
 
 /* ========================= */
@@ -115,9 +121,7 @@ function update(){
 
     let item = list[index];
 
-    /* 초기화 */
     display.innerHTML = "";
-    display.innerText = "";
 
     /* 슬라이더 */
     const percent = index / (list.length - 1);
@@ -130,58 +134,35 @@ function update(){
 
     btnMeaning.innerText = (mode === "kanji") ? "뜻" : "한자";
 
-    /* =========================
-       ⭐ 출력 (구조 통일 핵심)
-    ========================= */
+    /* ========================= */
 
     if(tempMode === "meaning"){
-        display.innerHTML = `
-            <div style="
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                height:100%;
-                font-size:2.5em;
-            ">
+        display.innerHTML = wrap(`
+            <div style="font-size:2.5em;">
                 ${item.r}
             </div>
-        `;
+        `);
         display.className = "display reading";
         btnMeaning.classList.add("active");
     }
 
     else if(tempMode === "kanji"){
-        display.innerHTML = `
-            <div style="
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                height:100%;
-                font-size:5em;
-                font-weight:bold;
-            ">
+        display.innerHTML = wrap(`
+            <div style="font-size:5em; font-weight:bold;">
                 ${item.k}
             </div>
-        `;
+        `);
         display.className = "display kanji";
         btnMeaning.classList.add("active");
     }
 
     else if(tempMode === "reading"){
-        display.innerHTML = `
-            <div style="
-                display:flex;
-                flex-direction:column;
-                justify-content:center;
-                align-items:center;
-                height:100%;
-                font-size:2em;
-                gap:0.3em;
-            ">
+        display.innerHTML = wrap(`
+            <div style="display:flex; flex-direction:column; gap:0.3em; font-size:2em;">
                 <div>${toHiragana(item.on)}</div>
                 <div>${toHiragana(item.kun)}</div>
             </div>
-        `;
+        `);
         display.className = "display reading";
         btnReading.classList.add("active");
     }
@@ -190,52 +171,32 @@ function update(){
         const m1Size = getMeaningFontSize(item.words[0].m);
         const m2Size = getMeaningFontSize(item.words[1].m);
 
-        display.innerHTML = `
-            <div style="
-                display:grid;
-                grid-template-columns:1fr 1fr;
-                column-gap:2em;
-                row-gap:0.2em;
-                text-align:center;
-                height:100%;
-                align-content:center;
-            ">
-                <div style="font-size:1.2em; font-weight:bold;">
-                    ${item.words[0].w}
-                </div>
-                <div style="font-size:1.2em; font-weight:bold;">
-                    ${item.words[1].w}
-                </div>
+        display.innerHTML = wrap(`
+            <div class="word-grid">
 
-                <div style="font-size:0.6em; color:#aaa;">
-                    (${item.words[0].y})
-                </div>
-                <div style="font-size:0.6em; color:#aaa;">
-                    (${item.words[1].y})
-                </div>
+                <div class="word-kanji">${item.words[0].w}</div>
+                <div class="word-kanji">${item.words[1].w}</div>
 
-                <div style="font-size:${m1Size};">
+                <div class="word-reading">(${item.words[0].y})</div>
+                <div class="word-reading">(${item.words[1].y})</div>
+
+                <div class="word-meaning" style="font-size:${m1Size}">
                     ${item.words[0].m}
                 </div>
-                <div style="font-size:${m2Size};">
+                <div class="word-meaning" style="font-size:${m2Size}">
                     ${item.words[1].m}
                 </div>
+
             </div>
-        `;
+        `);
+
         display.className = "display reading";
         btnWords.classList.add("active");
     }
 
     else if(showMeaningChk){
-        display.innerHTML = `
-            <div style="
-                display:flex;
-                flex-direction:column;
-                justify-content:center;
-                align-items:center;
-                height:100%;
-                gap:0.3em;
-            ">
+        display.innerHTML = wrap(`
+            <div style="display:flex; flex-direction:column; gap:0.3em;">
                 <div style="font-size:5em; font-weight:bold;">
                     ${item.k}
                 </div>
@@ -243,37 +204,24 @@ function update(){
                     ${item.r}
                 </div>
             </div>
-        `;
+        `);
         display.className = "display";
     }
 
     else {
         if(mode === "kanji"){
-            display.innerHTML = `
-                <div style="
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    height:100%;
-                    font-size:5em;
-                    font-weight:bold;
-                ">
+            display.innerHTML = wrap(`
+                <div style="font-size:5em; font-weight:bold;">
                     ${item.k}
                 </div>
-            `;
+            `);
             display.className = "display kanji";
         } else {
-            display.innerHTML = `
-                <div style="
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    height:100%;
-                    font-size:2.5em;
-                ">
+            display.innerHTML = wrap(`
+                <div style="font-size:2.5em;">
                     ${item.r}
                 </div>
-            `;
+            `);
             display.className = "display reading";
         }
     }
@@ -286,18 +234,18 @@ function update(){
 }
 
 /* =========================
-   ⭐ 슬라이더 + 초기화
+   슬라이더 + 초기화
 ========================= */
 
 window.onload = () => {
 
     loadState();
 
-    const wrap = document.getElementById("sliderWrap");
+    const wrapEl = document.getElementById("sliderWrap");
     const thumb = document.getElementById("sliderThumb");
 
     function move(clientX){
-        const rect = wrap.getBoundingClientRect();
+        const rect = wrapEl.getBoundingClientRect();
 
         let x = clientX - rect.left;
         x = Math.max(0, Math.min(x, rect.width));
@@ -311,7 +259,6 @@ window.onload = () => {
         update();
     }
 
-    /* PC */
     thumb.addEventListener("mousedown", () => isDragging = true);
 
     document.addEventListener("mousemove", (e) => {
@@ -321,7 +268,6 @@ window.onload = () => {
 
     document.addEventListener("mouseup", () => isDragging = false);
 
-    /* 모바일 */
     thumb.addEventListener("touchstart", () => isDragging = true);
 
     document.addEventListener("touchmove", (e) => {
