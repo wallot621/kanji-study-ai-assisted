@@ -5,8 +5,19 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>한자 학습</title>
-<!-- 1135 -->
+
 <style>
+
+/* =========================
+   ⭐ 기본 세팅
+========================= */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    touch-action: manipulation;   /* ⭐ 더블탭 방지 */
+}
+
 body {
     background: #0f0f13;
     color: white;
@@ -14,23 +25,22 @@ body {
 
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;   /* ⭐ 중앙 정렬 복구 */
 
-    min-height: 100dvh;     /* ⭐ 수정 */
-    margin: 0;
-    padding-top: 10px;
-
-    overflow-y: auto;       /* ⭐ 핵심 (잘림 해결) */
-    overscroll-behavior-x: none;
+    min-height: 100dvh;
+    overflow-y: auto;      /* ⭐ 잘림 방지 */
 }
 
-/* ========================= */
+/* =========================
+   ⭐ 폰 프레임
+========================= */
 
 .phone-frame {
     width: 100%;
     max-width: 420px;
+    aspect-ratio: 9 / 19.5;
 
-    aspect-ratio: 9 / 19.5;   /* 아이폰 비율 */
+    margin: auto 0;   /* ⭐ 여백 균형 핵심 */
 }
 
 /* ========================= */
@@ -59,7 +69,7 @@ select, button {
 }
 
 /* =========================
-   display 구조
+   ⭐ display 핵심
 ========================= */
 
 .display {
@@ -100,7 +110,7 @@ select, button {
 }
 
 /* =========================
-   단어
+   ⭐ 단어
 ========================= */
 
 .word-grid {
@@ -128,7 +138,7 @@ select, button {
 }
 
 /* =========================
-   슬라이더
+   ⭐ 슬라이더
 ========================= */
 
 #sliderWrap {
@@ -160,6 +170,7 @@ select, button {
     border-radius: 50%;
     transform: translate(-50%, -50%);
 }
+
 </style>
 </head>
 
