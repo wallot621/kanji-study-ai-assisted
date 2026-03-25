@@ -84,12 +84,11 @@ select, button {
 ========================= */
 
 .display {
-    height: 320px;   /* ⭐ 고정 */
-    flex: none;      /* ⭐ 핵심 */
-    
+    flex: 1;                     /* ⭐ 남는 공간 채움 */
+    overflow: hidden;
+
     display: flex;
     justify-content: center;
-    overflow: hidden;
 }
 
 .display-inner {
